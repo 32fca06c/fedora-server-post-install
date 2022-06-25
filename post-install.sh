@@ -20,3 +20,6 @@ echo WantedBy=multi-user.target>>/etc/systemd/system/qbittorrent.service
 systemctl daemon-reload
 systemctl start qbittorrent
 systemctl enable qbittorrent
+
+ip link add dev wg0 type wireguard
+ip address add dev wg0 172.16.0.1/24
