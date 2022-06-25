@@ -16,10 +16,13 @@ echo ExecStart=/usr/bin/qbittorrent-nox>>/etc/systemd/system/qbittorrent.service
 echo >>/etc/systemd/system/qbittorrent.service
 echo [Install]>>/etc/systemd/system/qbittorrent.service
 echo WantedBy=multi-user.target>>/etc/systemd/system/qbittorrent.service
-
 systemctl daemon-reload
 systemctl start qbittorrent
 systemctl enable qbittorrent
 
 ip link add dev wg0 type wireguard
 ip address add dev wg0 172.16.0.1/24
+touch wg-srv-private
+chmod 0600 wg-srv-private
+wg genkey > wg-srv-private
+wg pubkey < wg-srv-private > wg-srv-public
