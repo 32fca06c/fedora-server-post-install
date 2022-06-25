@@ -16,3 +16,7 @@ echo ExecStart=/usr/bin/qbittorrent-nox>>/etc/systemd/system/qbittorrent.service
 echo >>/etc/systemd/system/qbittorrent.service
 echo [Install]>>/etc/systemd/system/qbittorrent.service
 echo WantedBy=multi-user.target>>/etc/systemd/system/qbittorrent.service
+
+systemctl daemon-reload
+systemctl start qbittorrent
+systemctl enable qbittorrent
