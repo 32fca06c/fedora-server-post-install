@@ -15,4 +15,4 @@ UMask=0000>>/etc/systemd/system/qbittorrent.service
 ExecStart=/usr/bin/qbittorrent-nox>>/etc/systemd/system/qbittorrent.service
 echo.>>/etc/systemd/system/qbittorrent.service
 [Install]>>/etc/systemd/system/qbittorrent.service
-WantedBy=multi-user.target>/etc/systemd/system/qbittorrent.service
+WantedBy=multi-user.target>>/etc/systemd/system/qbittorrent.service
