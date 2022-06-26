@@ -1,6 +1,7 @@
 echo fastestmirror=True>>/etc/dnf/dnf.conf
 echo max_parallel_downloads=20>>/etc/dnf/dnf.conf
 
+dnf install qbittorrent-nox -y
 echo [Unit]>/etc/systemd/system/qbittorrent.service
 echo Description=qBittorrent-nox service>>/etc/systemd/system/qbittorrent.service
 echo Wants=network-online.target>>/etc/systemd/system/qbittorrent.service
@@ -24,4 +25,4 @@ cd ~/.config/qBittorrent/ssl
 openssl req -new -x509 -nodes -out server.crt -keyout server.key
 
 curl -sSL https://repo.45drives.com/setup | sudo bash
-dnf install cockpit-file-sharing cockpit-navigator
+dnf install cockpit-file-sharing cockpit-navigator -y
