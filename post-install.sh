@@ -22,3 +22,6 @@ systemctl enable qbittorrent
 mkdir ~/.config/qBittorrent/ssl
 cd ~/.config/qBittorrent/ssl
 openssl req -new -x509 -nodes -out server.crt -keyout server.key
+
+curl -sSL https://repo.45drives.com/setup | sudo bash
+dnf install cockpit-file-sharing cockpit-navigator
