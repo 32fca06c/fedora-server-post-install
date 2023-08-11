@@ -21,3 +21,4 @@ sudo mysql -uroot -proot -e "FLUSH PRIVILEGES;"
 # Nextcloud Cache
 sudo dnf install redis -y
 sudo systemctl enable --now redis.service
+# Nextcloud Fixes
