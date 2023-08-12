@@ -5,6 +5,11 @@ DB_PASSWORD=password
 # Nextcloud
 sudo dnf install nextcloud-nginx -y
 sudo touch /usr/share/nextcloud/config/CAN_INSTALL
+sudo setfacl -R -m u:nginx:rwx /usr/share/nextcloud/*
+sudo chown -R nginx:nginx /usr/share/nextcloud/
+sudo semanage fcontext -a -t httpd_sys_rw_content_t '/usr/share/nextcloud/config(/.*)?'
+sudo semanage fcontext -a -t httpd_sys_rw_content_t '/usr/share/nextcloud/apps(/.*)?'
+sudo semanage fcontext -a -t httpd_sys_rw_content_t '/usr/share/nextcloud/3rdparty/aws/aws-sdk-php/src/data/logs(/.*)?'
 # Nextcloud Storage
 sudo mkdir /home/nextcloud
 sudo chown -R nginx:nginx /home/nextcloud
@@ -22,3 +27,5 @@ sudo mysql -uroot -proot -e "FLUSH PRIVILEGES;"
 sudo dnf install redis -y
 sudo systemctl enable --now redis.service
 # Nextcloud Fixes
+# Nextcloud Apps Manage
+sudo -u nginx php occ app:disable
