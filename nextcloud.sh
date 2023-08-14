@@ -37,6 +37,8 @@ sudo systemctl enable --now redis.service
 sudo sed -i 's,HP_VERSION_ID >= 80200,HP_VERSION_ID >= 80300,g' /usr/share/nextcloud/lib/versioncheck.php
 sudo sed -i 's,'writable' => false,'writable' => true,g'/usr/share/nextcloud/config/config.php
 sudo dnf install php-intl php-sodium php-opcache -y
+sudo sed -i "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=32/" /etc/php.d/10-opcache.ini
+sudo sed -i "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=1/" /etc/php.d/10-opcache.ini
 # Nextcloud Apps Manage
 sudo -u nginx php /usr/share/nextcloud/occ app:disable activity
 sudo -u nginx php /usr/share/nextcloud/occ app:disable dashboard
