@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo systemctl disable --now php-fpm.service
 # Variables
 DB_USERNAME=user
 DB_PASSWORD=password
