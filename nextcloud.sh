@@ -43,3 +43,4 @@ sudo sed -i "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=1/" /etc/php.d
 sudo -u nginx php /usr/share/nextcloud/occ app:disable activity
 sudo -u nginx php /usr/share/nextcloud/occ app:disable dashboard
 sudo -u nginx php /usr/share/nextcloud/occ app:disable photos
+sudo -u nginx php /usr/share/nextcloud/occ config:system:set simpleSignUpLink.shown --value=true
