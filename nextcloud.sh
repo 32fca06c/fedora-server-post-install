@@ -44,3 +44,6 @@ sudo -u nginx php /usr/share/nextcloud/occ app:disable activity
 sudo -u nginx php /usr/share/nextcloud/occ app:disable dashboard
 sudo -u nginx php /usr/share/nextcloud/occ app:disable photos
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set simpleSignUpLink.shown --value=true
+sudo -u nginx php /usr/share/nextcloud/occ config:system:set default_phone_region --value=RU
+sudo -u nginx php /usr/share/nextcloud/occ config:system:set skeletondirectory
+sudo -u nginx php /usr/share/nextcloud/occ config:system:set templatedirectory
