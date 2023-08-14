@@ -12,6 +12,9 @@ sudo chown nginx:nginx /usr/share/nextcloud/config/config.php
 sudo semanage fcontext -a -t httpd_sys_rw_content_t '/usr/share/nextcloud/config(/.*)?'
 sudo semanage fcontext -a -t httpd_sys_rw_content_t '/usr/share/nextcloud/apps(/.*)?'
 sudo semanage fcontext -a -t httpd_sys_rw_content_t '/usr/share/nextcloud/3rdparty/aws/aws-sdk-php/src/data/logs(/.*)?'
+sudo sed -i "s/memory_limit = 128M/memory_limit = 512M/" /etc/php.ini
+sudo sed -i "s/post_max_size = 8M/post_max_size = 100M/" /etc/php.ini
+sudo sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 100M/" /etc/php.ini
 # Nextcloud Storage
 sudo mkdir /home/nextcloud
 sudo chown -R nginx:nginx /home/nextcloud
