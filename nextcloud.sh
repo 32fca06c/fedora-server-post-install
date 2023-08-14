@@ -16,9 +16,7 @@ sudo chown -R nginx:nginx /home/nextcloud
 sudo semanage fcontext -a -t httpd_sys_rw_content_t '/home/nextcloud(/.*)?'
 sudo restorecon -v '/home/nextcloud'
 # Nextcloud Database
-sudo dnf install mariadb-server -y
-sudo systemctl enable --now mariadb
-sudo mysql_secure_installation
+wget -O - https://raw.githubusercontent.com/32fca06c/fedora-server-post-install/main/mariadb.sh | sudo bash
 sudo mysql -uroot -proot -e "CREATE DATABASE nextcloud;"
 sudo mysql -uroot -proot -e "CREATE USER '$DB_USERNAME'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
 sudo mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON nextcloud.* TO '$DB_USERNAME'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
