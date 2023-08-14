@@ -4,6 +4,7 @@ DB_USERNAME=user
 DB_PASSWORD=password
 # Nextcloud
 sudo dnf install nextcloud-nginx -y
+sudo sed -i -e 's,user = apache,user = nginx,g' -e 's,group = apache,group = nginx,g' /etc/php-fpm.d/nextcloud.conf
 sudo touch /usr/share/nextcloud/config/CAN_INSTALL
 sudo setfacl -R -m u:nginx:rwx /usr/share/nextcloud/*
 sudo chown -R nginx:nginx /usr/share/nextcloud/
