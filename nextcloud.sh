@@ -26,5 +26,6 @@ sudo mysql -uroot -proot -e "FLUSH PRIVILEGES;"
 sudo dnf install redis -y
 sudo systemctl enable --now redis.service
 # Nextcloud Fixes
+sudo sed -i 's,HP_VERSION_ID >= 80200,HP_VERSION_ID >= 80300,g' /usr/share/nextcloud/lib/versioncheck.php
 # Nextcloud Apps Manage
 sudo -u nginx php occ app:disable
