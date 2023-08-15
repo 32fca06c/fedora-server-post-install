@@ -36,9 +36,6 @@ sudo systemctl enable --now redis.service
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.distributed --value='\OC\Memcache\Redis'
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.local --value='\OC\Memcache\Redis'
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.locking --value='\OC\Memcache\Redis'
-sudo -u nginx php /usr/share/nextcloud/occ config:system:set config:app:set redis host --value=localhost
-sudo -u nginx php /usr/share/nextcloud/occ config:system:set config:app:set redis port --value=6379
-sudo -u nginx php /usr/share/nextcloud/occ config:system:set config:app:set redis timeout --value=0.0
 # Nextcloud Fixes
 sudo sed -i 's,HP_VERSION_ID >= 80200,HP_VERSION_ID >= 80300,g' /usr/share/nextcloud/lib/versioncheck.php
 sudo sed -i 's,'writable' => false,'writable' => true,g'/usr/share/nextcloud/config/config.php
