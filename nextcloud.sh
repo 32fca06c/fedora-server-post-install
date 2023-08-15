@@ -33,9 +33,9 @@ sudo mysql -uroot -proot -e "FLUSH PRIVILEGES;"
 # Nextcloud Cache
 sudo dnf install redis -y
 sudo systemctl enable --now redis.service
-sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.distributed --value='\\OC\\Memcache\\Redis'
-sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.local --value='\\OC\\Memcache\\Redis'
-sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.locking --value='\\OC\\Memcache\\Redis'
+sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.distributed --value='\OC\Memcache\Redis'
+sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.local --value='\OC\Memcache\Redis'
+sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.locking --value='\OC\Memcache\Redis'
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set config:app:set redis host --value=localhost
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set config:app:set redis port --value=6379
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set config:app:set redis timeout --value=0.0
