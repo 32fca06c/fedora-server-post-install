@@ -13,9 +13,7 @@ sudo chown nginx:nginx /usr/share/nextcloud/config/config.php
 sudo semanage fcontext -a -t httpd_sys_rw_content_t '/usr/share/nextcloud/config(/.*)?'
 sudo semanage fcontext -a -t httpd_sys_rw_content_t '/usr/share/nextcloud/apps(/.*)?'
 sudo semanage fcontext -a -t httpd_sys_rw_content_t '/usr/share/nextcloud/3rdparty/aws/aws-sdk-php/src/data/logs(/.*)?'
-sudo sed -i "s/memory_limit = 128M/memory_limit = 512M/" /etc/php.ini
-sudo sed -i "s/post_max_size = 8M/post_max_size = 100M/" /etc/php.ini
-sudo sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 100M/" /etc/php.ini
+sudo sed -i -e "s/memory_limit = 128M/memory_limit = 512M/" -e "s/post_max_size = 8M/post_max_size = 100M/" -e "s/upload_max_filesize = 2M/upload_max_filesize = 100M/" /etc/php.ini
 sudo setfacl -R -m u:nginx:rwx /var/lib/php/opcache/
 sudo setfacl -R -m u:nginx:rwx /var/lib/php/session/
 sudo setfacl -R -m u:nginx:rwx /var/lib/php/wsdlcache/
@@ -38,6 +36,11 @@ sudo mysql -uroot -proot -e "CREATE DATABASE nextcloud;"
 sudo mysql -uroot -proot -e "CREATE USER '$DB_USERNAME'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
 sudo mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON nextcloud.* TO '$DB_USERNAME'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
 sudo mysql -uroot -proot -e "FLUSH PRIVILEGES;"
+sudo -u nginx /usr/share/nextcloud/occ config:system:set dbtype --value=mysql
+sudo -u nginx /usr/share/nextcloud/occ config:system:set dbname --value=nextcloud
+sudo -u nginx /usr/share/nextcloud/occ config:system:set dbuser --value=$DB_USERNAME
+sudo -u nginx /usr/share/nextcloud/occ config:system:set dbpassword --value=$DB_PASSWORD
+sudo -u nginx /usr/share/nextcloud/occ config:system:set dbhost --value=localhost
 # Nextcloud Cache
 sudo dnf install redis -y
 sudo systemctl enable --now redis.service
