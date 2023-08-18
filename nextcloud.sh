@@ -65,7 +65,7 @@ sudo -u nginx php /usr/share/nextcloud/occ config:system:set default_phone_regio
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set skeletondirectory
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set templatedirectory
 # Background jobs
-( crontab -u nginx -l ; echo "*/5 * * * * php -f /usr/share/nextcloud/cron.php" ) | crontab -u nginx -
+( sudo crontab -u nginx -l ; echo "*/5 * * * * php -f /usr/share/nextcloud/cron.php" ) | sudo crontab -u nginx -
 sudo -u nginx php /usr/share/nextcloud/occ background:cron
 ##################################################
 sudo -u nginx php /usr/share/nextcloud/occ maintenance:mode --off
