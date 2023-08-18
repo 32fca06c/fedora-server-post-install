@@ -50,3 +50,6 @@ sudo -u nginx php /usr/share/nextcloud/occ config:system:set simpleSignUpLink.sh
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set default_phone_region --value=RU
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set skeletondirectory
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set templatedirectory
+sudo -u nginx php /usr/share/nextcloud/occ background:cron
+# 
+( crontab -u nginx -l ; echo "*/5 * * * * php -f /usr/share/nextcloud/cron.php" ) | crontab -u nginx -
