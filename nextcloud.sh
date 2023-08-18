@@ -18,6 +18,7 @@ sudo setfacl -R -m u:nginx:rwx /var/lib/php/opcache/
 sudo setfacl -R -m u:nginx:rwx /var/lib/php/session/
 sudo setfacl -R -m u:nginx:rwx /var/lib/php/wsdlcache/
 sudo systemctl enable --now php-fpm.service
+sudo -u nginx php /usr/share/nextcloud/occ maintenance:mode --on
 # Nextcloud Storage
 sudo mkdir /home/nextcloud
 sudo chown -R nginx:nginx /home/nextcloud
@@ -47,12 +48,13 @@ sudo systemctl enable --now redis.service
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.distributed --value='\OC\Memcache\Redis'
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.local --value='\OC\Memcache\Redis'
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set memcache.locking --value='\OC\Memcache\Redis'
+# OPCache
+sudo dnf install php-opcache -y
+sudo sed -i -e "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=32/" -e "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=1/" /etc/php.d/10-opcache.ini
 # Nextcloud Fixes
 sudo sed -i 's,HP_VERSION_ID >= 80200,HP_VERSION_ID >= 80300,g' /usr/share/nextcloud/lib/versioncheck.php
 sudo sed -i 's,'writable' => false,'writable' => true,g'/usr/share/nextcloud/config/config.php
-sudo dnf install php-intl php-sodium php-opcache -y
-sudo sed -i "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=32/" /etc/php.d/10-opcache.ini
-sudo sed -i "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=1/" /etc/php.d/10-opcache.ini
+sudo dnf install php-intl php-sodium -y
 # Nextcloud Apps Manage
 sudo -u nginx php /usr/share/nextcloud/occ app:disable activity
 sudo -u nginx php /usr/share/nextcloud/occ app:disable dashboard
