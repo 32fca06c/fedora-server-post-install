@@ -25,8 +25,15 @@ sudo mkdir /home/nextcloud
 sudo chown -R nginx:nginx /home/nextcloud
 sudo semanage fcontext -a -t httpd_sys_rw_content_t '/home/nextcloud(/.*)?'
 sudo restorecon -v '/home/nextcloud'
+# MariaDB
+sudo dnf install mariadb-server -y
+sudo systemctl enable --now mariadb
+sudo mysql -uroot -proot -e "DELETE FROM mysql.user WHERE User='';"
+sudo mysql -uroot -proot -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
+sudo mysql -uroot -proot -e "DROP DATABASE IF EXISTS test;"
+sudo mysql -uroot -proot -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';"
+sudo mysql -uroot -proot -e "FLUSH PRIVILEGES;"
 # Nextcloud Database
-wget -O - https://raw.githubusercontent.com/32fca06c/fedora-server-post-install/main/mariadb.sh | sudo bash
 sudo mysql -uroot -proot -e "CREATE DATABASE nextcloud;"
 sudo mysql -uroot -proot -e "CREATE USER '$DB_USERNAME'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
 sudo mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON nextcloud.* TO '$DB_USERNAME'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
