@@ -19,6 +19,7 @@ sudo sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 100M/" /etc/php.in
 sudo setfacl -R -m u:nginx:rwx /var/lib/php/opcache/
 sudo setfacl -R -m u:nginx:rwx /var/lib/php/session/
 sudo setfacl -R -m u:nginx:rwx /var/lib/php/wsdlcache/
+sudo systemctl enable --now php-fpm.service
 # Nextcloud Storage
 sudo mkdir /home/nextcloud
 sudo chown -R nginx:nginx /home/nextcloud
@@ -50,6 +51,8 @@ sudo -u nginx php /usr/share/nextcloud/occ config:system:set simpleSignUpLink.sh
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set default_phone_region --value=RU
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set skeletondirectory
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set templatedirectory
-sudo -u nginx php /usr/share/nextcloud/occ background:cron
-# 
+# Background jobs
 ( crontab -u nginx -l ; echo "*/5 * * * * php -f /usr/share/nextcloud/cron.php" ) | crontab -u nginx -
+sudo -u nginx php /usr/share/nextcloud/occ background:cron
+##################################################
+sudo -u nginx php /usr/share/nextcloud/occ maintenance:mode --off
