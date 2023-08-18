@@ -1,5 +1,6 @@
 #!/bin/bash
-sudo -u www-data php occ maintenance:mode --on
+sudo -u nginx php /usr/share/nextcloud/occ maintenance:mode --on
 sudo mysql -uroot -proot -e "FLUSH TABLES WITH READ LOCK;"
+mysqldump --single-transaction -uroot -proot --databases nextcloud > nextcloud-sqlbkp_`date +"%Y%m%d"`.bak
 sudo mysql -uroot -proot -e "UNLOCK TABLES;"
-sudo -u www-data php occ maintenance:mode --off
+sudo -u nginx php /usr/share/nextcloud/occ maintenance:mode --off
