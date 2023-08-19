@@ -19,7 +19,7 @@ sudo setfacl -R -m u:nginx:rwx /var/lib/php/session/
 sudo setfacl -R -m u:nginx:rwx /var/lib/php/wsdlcache/
 sudo systemctl enable --now php-fpm.service
 sudo sed -i 's,HP_VERSION_ID >= 80200,HP_VERSION_ID >= 80300,g' /usr/share/nextcloud/lib/versioncheck.php
-sudo sed -i 's,'writable' => false,'writable' => true,g'/usr/share/nextcloud/config/config.php
+#sudo sed -i 's,'writable' => false,'writable' => true,g'/usr/share/nextcloud/config/config.php
 sudo -u nginx php /usr/share/nextcloud/occ maintenance:mode --on
 # Nextcloud Storage
 sudo mkdir /home/nextcloud
