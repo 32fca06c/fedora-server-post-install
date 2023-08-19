@@ -64,8 +64,6 @@ sudo -u nginx php /usr/share/nextcloud/occ config:system:set simpleSignUpLink.sh
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set default_phone_region --value=RU
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set skeletondirectory
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set templatedirectory
-sudo -u nginx php /usr/share/nextcloud/occ config:system:set default_language --value=ru
-sudo -u nginx php /usr/share/nextcloud/occ config:system:set default_locale --value=ru_RU
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set force_language --value=ru
 sudo -u nginx php /usr/share/nextcloud/occ config:system:set force_locale --value=ru_RU
 # Background jobs
