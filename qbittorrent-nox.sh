@@ -1,6 +1,5 @@
 #/bin/bash
 sudo dnf install qbittorrent-nox -y
-EXPORT USER=$(whoami)
 sudo tee -a /etc/systemd/system/qbittorrent.service <<EOF
 [Unit]
 Description=qBittorrent-nox service
@@ -11,7 +10,7 @@ After=network-online.target nss-lookup.target
 Type=exec
 Restart=always
 RestartSec=1
-User=$USER
+User=adner
 UMask=0000
 ExecStart=/usr/bin/qbittorrent-nox
 
