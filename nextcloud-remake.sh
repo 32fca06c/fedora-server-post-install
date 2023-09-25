@@ -27,15 +27,9 @@ nextcloud() {
     sudo setfacl -R -m u:nginx:rwx /var/lib/php/opcache/
     sudo setfacl -R -m u:nginx:rwx /var/lib/php/session/
     sudo setfacl -R -m u:nginx:rwx /var/lib/php/wsdlcache/
-    sudo mkdir $data_dir
-    sudo chown -R nginx:nginx $data_dir
-    sudo semanage fcontext -a -t httpd_sys_rw_content_t '/home/nextcloud(/.*)?'
-    sudo restorecon -v $data_dir
 }
 
 db() {
-    sudo dnf install mariadb-server -y
-    sudo systemctl enable --now mariadb
     sudo mysql -uroot -proot -e "CREATE DATABASE $database_name;"
     sudo mysql -uroot -proot -e "CREATE USER '$database_user'@'localhost' IDENTIFIED BY '$database_pass';"
     sudo mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON $database_name.* TO '$database_user'@'localhost' IDENTIFIED BY '$database_pass';"
@@ -43,9 +37,14 @@ db() {
 }
 
 redis() {
-    sudo dnf install redis -y
-    sudo systemctl enable --now redis.service
     occ config:system:set memcache.distributed --value='\OC\Memcache\Redis'
     occ config:system:set memcache.local --value='\OC\Memcache\Redis'
     occ config:system:set memcache.locking --value='\OC\Memcache\Redis'
+}
+
+dir() {
+    sudo mkdir $data_dir
+    sudo chown -R nginx:nginx $data_dir
+    sudo semanage fcontext -a -t httpd_sys_rw_content_t '/home/nextcloud(/.*)?'
+    sudo restorecon -v $data_dir
 }
