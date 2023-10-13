@@ -1,13 +1,13 @@
 #!/bin/bash
 # Packages
 sudo dnf install nginx php-fpm -y
-
+# PHP-FPM
 sudo tee -a /etc/php-fpm.d/nextcloud.conf <<EOF
 [nextcloud]
 user = nginx
 group = nginx
 listen = /run/php-fpm/nextcloud.sock
-listen.acl_users = apache,nginx
+listen.acl_users = nginx
 listen.allowed_clients = 127.0.0.1
 pm = dynamic
 pm.max_children = 50
