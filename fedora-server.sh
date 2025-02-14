@@ -48,6 +48,7 @@ function second_run() {
     ###
     if ! dnf list installed "jellyfin-server" &> /dev/null; then
         sudo dnf install jellyfin-server jellyfin-web intel-media-driver -y
+        sudo dnf install --allowerasing ffmpeg-libs -y
         sudo usermod -aG $(whoami) jellyfin
         sudo systemctl enable --now jellyfin.service
     fi
