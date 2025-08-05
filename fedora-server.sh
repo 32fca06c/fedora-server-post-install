@@ -11,6 +11,7 @@ function first_run() {
     sudo sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub
     sudo sed -i '/^GRUB_CMDLINE_LINUX=/ s/"$/ selinux=0"/' /etc/default/grub
     sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+    sudo grubby --update-kernel=ALL --args=“intel_iommu=on”
     ###
     if ! dnf list installed "cronie" &> /dev/null; then
         sudo dnf install cronie -y
