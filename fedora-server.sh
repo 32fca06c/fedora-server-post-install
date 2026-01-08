@@ -5,7 +5,7 @@ function first_run() {
         exit 1
     fi
     ###
-    echo "$(whoami)   ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
+    echo "$(whoami) ALL=(ALL:ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/$(whoami)
     ###
     sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
     #sudo sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub
