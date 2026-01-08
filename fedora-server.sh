@@ -8,10 +8,9 @@ function first_run() {
     echo "$(whoami)   ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
     ###
     sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
-    sudo sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub
-    sudo sed -i '/^GRUB_CMDLINE_LINUX=/ s/"$/ selinux=0"/' /etc/default/grub
+    #sudo sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub
+    sudo grubby --update-kernel=ALL --args "selinux=0 i915.force_probe=*"
     sudo grub2-mkconfig -o /boot/grub2/grub.cfg
-    sudo grubby --update-kernel=ALL --args=“intel_iommu=on”
     ###
     if ! dnf list installed "cronie" &> /dev/null; then
         sudo dnf install cronie -y
@@ -52,38 +51,6 @@ function second_run() {
         sudo dnf install --allowerasing ffmpeg-libs -y
         sudo usermod -aG $(whoami) jellyfin
         sudo systemctl enable --now jellyfin.service
-    fi
-    ###
-    if ! dnf list installed "qbittorrent-nox" &> /dev/null; then
-        sudo useradd -r -s /usr/sbin/nologin -m qbittorrent
-        sudo usermod -aG $(whoami) qbittorrent
-        sudo dnf install qbittorrent-nox -y
-        sudo -u qbittorrent qbittorrent-nox
-    fi
-    ###
-    if ! dnf list installed "sing-box-beta" &> /dev/null; then
-        sudo dnf config-manager addrepo --from-repofile=https://sing-box.app/sing-box.repo
-        sudo dnf install sing-box-beta -y
-    fi
-    ###
-    if ! dnf list installed "nginx" &> /dev/null; then
-        sudo dnf install nginx -y
-        sudo usermod -aG $(whoami) nginx
-        sudo firewall-cmd --add-service=http --permanent
-        sudo firewall-cmd --add-service=https --permanent
-        sudo firewall-cmd --reload
-        sudo systemctl enable --now nginx.service
-    fi
-    ###
-    if ! dnf list installed "nodejs" &> /dev/null; then
-        sudo dnf install nodejs nodemon -y
-    fi
-    ###
-    if ! dnf list installed "powershell" &> /dev/null; then
-        sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc -y
-        curl https://packages.microsoft.com/config/rhel/9/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo
-        sudo dnf makecache
-        sudo dnf install powershell -y
     fi
 }
 
