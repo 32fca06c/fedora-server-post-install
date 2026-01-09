@@ -30,7 +30,7 @@ function second_run() {
     sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
     sudo dnf update -y
     ###
-    if ! dnf list installed "samba" &> /dev/null; then
+    if ! dnf5 list --installed "samba" &> /dev/null; then
         sudo dnf install samba -y
         sudo systemctl enable --now smb
         sudo firewall-cmd --permanent --add-service=samba
@@ -38,15 +38,16 @@ function second_run() {
         sudo smbpasswd -a $(whoami)
     fi
     ###
-    if ! dnf list installed "cockpit" &> /dev/null; then
+    if ! dnf5 list --installed "cockpit" &> /dev/null; then
         sudo dnf install cockpit pcp python3-pcp -y
         sudo systemctl enable --now cockpit.socket
         sudo systemctl enable --now pmlogger.service
         sudo firewall-cmd --add-service=cockpit --permanent
         sudo firewall-cmd --reload
+        sudo dnf install qemu-kvm-core libvirt virt-install cockpit-machines guestfs-tools -y
     fi
     ###
-    if ! dnf list installed "jellyfin-server" &> /dev/null; then
+    if ! dnf5 list --installed "jellyfin-server" &> /dev/null; then
         sudo dnf install jellyfin-server jellyfin-web intel-media-driver -y
         sudo dnf install --allowerasing ffmpeg-libs -y
         sudo usermod -aG $(whoami) jellyfin
