@@ -45,6 +45,7 @@ function second_run() {
         sudo firewall-cmd --add-service=cockpit --permanent
         sudo firewall-cmd --reload
         sudo dnf install qemu-kvm-core libvirt virt-install cockpit-machines guestfs-tools -y
+        sudo systemctl enable --now libvirtd 
     fi
     ###
     if ! dnf5 list --installed "jellyfin-server" &> /dev/null; then
